@@ -1,0 +1,87 @@
+﻿<metro:MetroWindow x:Class="SendStuffToPrinter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:av="clr-namespace:ICSharpCode.AvalonEdit;assembly=ICSharpCode.AvalonEdit"
+        xmlns:b="clr-namespace:SendStuffToPrinter.Behaviors"
+        xmlns:vm="clr-namespace:SendStuffToPrinter.ViewModels"
+        xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Title="Send Stuff to Printer" Height="600" Width="800">
+    <metro:MetroWindow.Icon>
+        <DrawingImage>
+            <DrawingImage.Drawing>
+                <GeometryDrawing Brush="White"
+                                 Geometry="F1 M 25,27L 25,17L 51,17L 51,27L 47,27L 47,21L 29,21L 29,27L 25,27 Z M 16,28L 60,28L 60,51L 51,51L 51,60L 25,60L 25,51L 16,51L 16,28 Z M 55,46L 55,33L 21,33L 21,46L 55,46 Z M 25,44L 25,39L 51,39L 51,44L 25,44 Z " />
+            </DrawingImage.Drawing>
+        </DrawingImage>
+    </metro:MetroWindow.Icon>
+    
+    <metro:MetroWindow.DataContext>
+        <vm:MainViewModel />
+    </metro:MetroWindow.DataContext>
+    
+    <DockPanel>
+        <ToolBar DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
+            <ToolBar.Resources>
+                <Style TargetType="{x:Type ToolBarPanel}">
+                    <Setter Property="Orientation" Value="Vertical"/>
+                </Style>
+            </ToolBar.Resources>
+
+            <Grid HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                
+                <Button Grid.Column="0" Command="{Binding OpenFileCommand}" ToolTip="Open File">
+                    <Rectangle Width="15" Height="15">
+                        <Rectangle.Fill>
+                            <DrawingBrush>
+                                <DrawingBrush.Drawing>
+                                    <GeometryDrawing Brush="Black"
+                                                     Geometry="F1 M 19,50L 28,34L 63,34L 54,50L 19,50 Z M 19,28.0001L 35,28C 36,25 37.4999,24.0001 37.4999,24.0001L 48.75,24C 49.3023,24 50,24.6977 50,25.25L 50,28L 53.9999,28.0001L 53.9999,32L 27,32L 19,46.4L 19,28.0001 Z " />
+                                </DrawingBrush.Drawing>
+                            </DrawingBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Button>
+                
+                <ComboBox Grid.Column="1" ItemsSource="{Binding InstalledPrinters}" SelectedValue="{Binding SelectedPrinter}" />
+                
+                <Button Grid.Column="2" Command="{Binding SendCommand}" ToolTip="Send to Printer">
+                    <Rectangle Width="15" Height="15">
+                        <Rectangle.Fill>
+                            <DrawingBrush>
+                                <DrawingBrush.Drawing>
+                                    <GeometryDrawing Brush="Black"
+                                                     Geometry="F1 M 19.0002,34L 19.0002,42L 43.7502,42L 33.7502,52L 44.2502,52L 58.2502,38L 44.2502,24L 33.7502,24L 43.7502,34L 19.0002,34 Z " />
+                                </DrawingBrush.Drawing>
+                            </DrawingBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Button>
+            </Grid>
+        </ToolBar>
+
+        <StatusBar DockPanel.Dock="Bottom">
+            <TextBlock>
+                <Run>Ln</Run>
+                <Run Text="{Binding Line}" />
+            </TextBlock>
+            
+            <TextBlock>
+                <Run>Col</Run>
+                <Run Text="{Binding Column}" />
+            </TextBlock>
+        </StatusBar>
+        
+        <av:TextEditor FontFamily="Consolas" WordWrap="True">
+            <i:Interaction.Behaviors>
+                <b:AvalonEditTextBehavior Text="{Binding PrinterText}" />
+                <b:AvalonEditPositionBehavior Line="{Binding Line}" Column="{Binding Column}" />
+            </i:Interaction.Behaviors>
+        </av:TextEditor>
+    </DockPanel>
+</metro:MetroWindow>
