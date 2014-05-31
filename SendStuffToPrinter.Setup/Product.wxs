@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="SendStuffToPrinter" Language="1033" Version="1.0.0.0" Manufacturer="Cole Cameron" UpgradeCode="2893bb3e-0365-4316-ac1e-deab2e284569">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+
+    <Icon Id="PrintIcon.ico" SourceFile="..\SendStuffToPrinter\agt_print.ico"/>
+      
+		<Feature Id="ProductFeature" Title="SendStuffToPrinter" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="SendStuffToPrinter" />
+			</Directory>
+      
+      <Directory Id="ProgramMenuFolder" Name="ProgramMenuFolder">
+          <Directory Id="ApplicationProgramsFolder" Name="Send Stuff To Printer"/>
+      </Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="SendStuffToPrinterExe" Guid="{1B8D8BAD-8044-47F1-B6B4-448D4E09365F}">
+        <File Id="SendStuffToPrinter.exe" Name="SendStuffToPrinter.exe" KeyPath="yes"
+              Source="..\SendStuffToPrinter\bin\$(var.SendStuffToPrinter.Configuration)\SendStuffToPrinter.exe">
+          <Shortcut Id="ApplicationStartMenuShortcut" 
+              Name="Send Stuff To Printer" 
+              Directory="ApplicationProgramsFolder"
+              Advertise="yes"
+              Icon="PrintIcon.ico"
+              Description="Simple WPF Application used to send raw text to a printer" />
+        </File>
+        <RemoveFolder Id="DeleteShortcutFolder"
+                Directory="ApplicationProgramsFolder"
+                On="uninstall" />
+      </Component>
+    
+      <Component Id="SendStuffToPrinterExeConfig" Guid="{A644121F-7B01-4ABA-BED9-179C253764EE}">
+        <File Id="SendStuffToPrinter.exe.config" Name="SendStuffToPrinter.exe.config" KeyPath="yes"
+              Source="..\SendStuffToPrinter\bin\$(var.SendStuffToPrinter.Configuration)\SendStuffToPrinter.exe.config" />
+      </Component>
+    
+      <Component Id="GalaSoftMvvmLightDll" Guid="{E8C0949C-F442-4774-8FD6-6CAAD8F22E3C}">
+        <File Id="GalaSoft.MvvmLight.dll" Name="GalaSoft.MvvmLight.dll" KeyPath="yes"
+              Source="..\SendStuffToPrinter\bin\$(var.SendStuffToPrinter.Configuration)\GalaSoft.MvvmLight.dll" />
+      </Component>
+    
+      <Component Id="GalaSoftMvvmLightExtrasDll" Guid="{9FE41CAB-1E6E-473F-BAD9-F55C59AE7A4A}">
+        <File Id="GalaSoft.MvvmLight.Extras.dll" Name="GalaSoft.MvvmLight.Extras.dll" KeyPath="yes"
+              Source="..\SendStuffToPrinter\bin\$(var.SendStuffToPrinter.Configuration)\GalaSoft.MvvmLight.Extras.dll" />
+      </Component>
+    
+      <Component Id="ICSharpCodeAvalonEditDll" Guid="{29BCEBC6-FC5F-48A9-9A44-9E84A33FC161}">
+        <File Id="ICSharpCode.AvalonEdit.dll" Name="ICSharpCode.AvalonEdit.dll" KeyPath="yes"
+              Source="..\SendStuffToPrinter\bin\$(var.SendStuffToPrinter.Configuration)\ICSharpCode.AvalonEdit.dll" />
+      </Component>
+    
+      <Component Id="MahAppsMetroDll" Guid="{8D308D15-9C77-42DF-B6E0-E6C9C307CF04}">
+        <File Id="MahApps.Metro.dll" Name="MahApps.Metro.dll"
+              Source="..\SendStuffToPrinter\bin\$(var.SendStuffToPrinter.Configuration)\MahApps.Metro.dll" />
+      </Component>
+    
+      <Component Id="MicrosoftPracticesServiceLocationDll" Guid="{418D9A70-B324-4227-97BB-F88313850266}">
+        <File Id="Microsoft.Practices.ServiceLocation.dll" Name="Microsoft.Practices.ServiceLocation.dll" KeyPath="yes"
+              Source="..\SendStuffToPrinter\bin\$(var.SendStuffToPrinter.Configuration)\Microsoft.Practices.ServiceLocation.dll" />
+      </Component>
+    
+      <Component Id="SystemWindowsInteractivityDll" Guid="{AA6A7241-5EE9-4C9D-9075-20D17D1123B3}">
+        <File Id="System.Windows.Interactivity.dll" Name="System.Windows.Interactivity.dll" KeyPath="yes"
+              Source="..\SendStuffToPrinter\bin\$(var.SendStuffToPrinter.Configuration)\System.Windows.Interactivity.dll" />
+      </Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>
